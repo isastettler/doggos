@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import SingleBreed from './SingleBreed';
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function BreedItem ({breed}) {
-    const [breedView, setBreedView] = useState(false);
-    return ( !breedView ? <div onClick={() => setBreedView(!breedView)}>{breed}</div> : <SingleBreed setBreedView={setBreedView} breed={breed}/>)
+export default function BreedItem({ breed }) {
+	return <Link to={{ pathname: `/${breed}`, state: breed }}>{breed}</Link>;
 }
-
