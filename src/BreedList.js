@@ -1,31 +1,42 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import BreedItem from "./BreedItem";
-import './index.css'
+import "./index.css";
 
 const breedsListApi = "https://dog.ceo/api/breeds/list/all";
 
 function BreedList() {
 	const [allBreeds, setAllBreeds] = useState([]);
-	const [breedSearch, setBreedSearch] = useState('');
+	const [error, setError] = useState(null);
+	const [breedSearch, setBreedSearch] = useState("");
 	//fetch the breeds list from dog api
-	const getBreedsList = async () => {
-		const response = await fetch(breedsListApi);
-		const { message } = await response.json();
-		console.log(message)
-		const breedsList = Object.keys(message);
-		setAllBreeds(breedsList);
+	const getBreedsList = () => {
+		axios
+			.get(breedsListApi)
+			.then(({ data }) => {
+				const breedsList = Object.keys(data.message);
+				setAllBreeds(breedsList);
+			})
+			.catch((error) => setError(error));
 	};
 	useEffect(() => {
 		getBreedsList();
 	}, []);
-
-	return (
+	return error ? (
+		<div>Error: ${error.message}</div>
+	) : (
 		<div className="container">
 			<h2>Dog List goes here </h2>
-			<input placeholder="search fav breed..." onChange={(e) => setBreedSearch(e.target.value)}/>
-			{allBreeds.filter(breed => breed.slice(0, breedSearch.length) === breedSearch).map((breed, idx) => (
-				<BreedItem key={idx} breed={breed} />
-			))}
+			<input
+				placeholder="search fav breed..."
+				value={breedSearch}
+				onChange={(e) => setBreedSearch(e.target.value)}
+			/>
+			{allBreeds
+				.filter((breed) => breed.slice(0, breedSearch.length) === breedSearch)
+				.map((breed, idx) => (
+					<BreedItem key={idx} breed={breed} />
+				))}
 		</div>
 	);
 }
