@@ -25,12 +25,27 @@ a:hover{
   color: gray
 }
 img {
-  margin: 5px
+  margin: 5px;
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
 }
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  justify-content: center;
+  max-height: 80%;
+}
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
 }
 .backLink {
   margin-bottom: 5px;

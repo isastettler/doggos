@@ -22,9 +22,18 @@ export default function SingleBreed({ history, match }) {
 		<div className="container">
 			<h2>Look at these sweet {breed} dogs</h2>
             <Link className="backLink" to="/">See all doggos</Link>
-			{images.map((image, idx) => (
-				<img key={idx} src={image} alt={`${breed} dog`} />
-			))}
+            {/* making sure images are loaded before running this next part --> simply becuase the css styling choice I made*/}
+           {images.length > 0 &&
+            <div className="row">
+                <div className="column">
+                    <img src={images[0]} alt={`${breed} dog`}/>
+                    <img src={images[1]} alt={`${breed} dog`}/>
+                </div>
+                <div className="column">
+                    <img src={images[2]} alt={`${breed} dog`}/>
+                    <img src={images[3]} alt={`${breed} dog`}/>
+                </div>
+            </div>}
 		</div>
 	);
 }
