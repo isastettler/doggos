@@ -19,7 +19,7 @@ input {
 a {
   text-decoration: none;
   color: black;
-  margin-top: 2px;
+  margin-bottom: 5px;
 }
 a:hover{
   color: gray
@@ -46,7 +46,4 @@ img {
   flex: 25%;
   max-width: 25%;
   padding: 0 4px;
-}
-.backLink {
-  margin-bottom: 5px;
 }

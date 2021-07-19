@@ -3,6 +3,7 @@ import axios from "axios";
 import BreedItem from "./BreedItem";
 import "./index.css";
 
+//api to fetch list of all breeds
 const breedsListApi = "https://dog.ceo/api/breeds/list/all";
 
 function BreedList() {
@@ -15,6 +16,7 @@ function BreedList() {
 		axios
 			.get(breedsListApi)
 			.then(({ data }) => {
+				//create the object to keep the subBreeds available for now
 				setAllBreeds(data.message);
 				setBreesList(Object.keys(data.message))
 			})
@@ -30,6 +32,7 @@ function BreedList() {
 			<h2>All the dogs</h2>
 			<input
 				placeholder="search fav breed..."
+				type="text"
 				value={breedSearch}
 				onChange={(e) => setBreedSearch(e.target.value)}
 			/>

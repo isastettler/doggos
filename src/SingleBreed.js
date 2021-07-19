@@ -21,7 +21,7 @@ export default function SingleBreed({ history, match }) {
         error ? <div>Error: ${error.message}</div> :
 		<div className="container">
 			<h2>Look at these sweet {breed} dogs</h2>
-            <Link className="backLink" to="/">See all doggos</Link>
+            <Link to="/">See all doggos</Link>
             {/* making sure images are loaded before running this next part --> simply becuase the css styling choice I made*/}
            {images.length > 0 &&
             <div className="row">
