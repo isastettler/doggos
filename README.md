@@ -1,8 +1,9 @@
-#Welcome to the doogos codebase
+
+# Welcome to the doogos codebase
 
 ## fun take home test - thank you ;)
 
-## Code related info
+### Code related info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
