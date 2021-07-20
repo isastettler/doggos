@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import BreedItem from "./BreedItem";
+import BreedName from "./BreedName";
 import "./index.css";
 
 //api to fetch list of all breeds
 const breedsListApi = "https://dog.ceo/api/breeds/list/all";
 
 function BreedList() {
+	const [breedsList, setBreedsList] = useState([]);
+	const [filteredBreedsList, setFilteredBreedsList] = useState([]);
 	const [allBreeds, setAllBreeds] = useState({});
-	const [breedsList, setBreesList] = useState([]);
 	const [error, setError] = useState(null);
 	const [breedSearch, setBreedSearch] = useState("");
 	//fetch the breeds list from dog api
@@ -16,15 +17,22 @@ function BreedList() {
 		axios
 			.get(breedsListApi)
 			.then(({ data }) => {
-				//create the object to keep the subBreeds available for now
-				setAllBreeds(data.message);
-				setBreesList(Object.keys(data.message))
+				//set both, breedsList and filteredBreedsList to the all breeds fetched 
+					//-> subbreeds would be available on the data.message object like such ->{ breed: [subbreed]} 
+				setBreedsList(Object.keys(data.message));
+				setFilteredBreedsList(Object.keys(data.message))
 			})
 			.catch((error) => setError(error));
 	};
 	useEffect(() => {
 		getBreedsList();
 	}, []);
+	useEffect(() => {
+		let regex = new RegExp(breedSearch, "g");
+		//if breedSearch is an empty string, set filteredBreedsList to breedsList
+		regex === /(?:)/g ? setFilteredBreedsList(breedsList) :
+		setFilteredBreedsList(breedsList.filter((breed) => regex.test(breed)));
+	}, [breedSearch]);
 	return error ? (
 		<div>Error: ${error.message}</div>
 	) : (
@@ -36,10 +44,9 @@ function BreedList() {
 				value={breedSearch}
 				onChange={(e) => setBreedSearch(e.target.value)}
 			/>
-			{breedsList
-				.filter((breed) => breed.slice(0, breedSearch.length) === breedSearch)
+			{filteredBreedsList
 				.map((breed, idx) => (
-					<BreedItem key={idx} breed={breed} subBreed={allBreeds[breed]}/>
+					<BreedName key={idx} breed={breed} subBreed={allBreeds[breed]} />
 				))}
 		</div>
 	);
