@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-
 import useSingleBreed from "./hooks/useSingleBreed";
 
-export default function SingleBreed({ history, match }) {
-    //call custom hook for variables used in display view
+export default function SingleBreed() {
+	//call custom hook for variables used in display view
 	const { breed, images, error } = useSingleBreed();
 
 	return error ? (
@@ -11,7 +10,7 @@ export default function SingleBreed({ history, match }) {
 	) : (
 		<div className="container">
 			<h2>Look at these sweet {breed} dogs</h2>
-			<Link to="/">See all doggos</Link>
+			<Link to="/" >See all doggos</Link>
 			{/* making sure images are loaded before running this next part --> simply becuase the css styling choice I made*/}
 			{images.length > 0 && (
 				<div className="row">

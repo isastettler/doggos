@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import BreedName from "./BreedName";
 import useBreedList from "./hooks/useBreedList";
 import "./index.css";
 
 function BreedList() {
+	
 	//call custom hook for variables needed in display view
-	const {
-		allBreeds,
-		filteredBreedsList,
-		searchInput,
-		handleSearchInput,
-		error,
-	} = useBreedList();
-
+	const { filteredBreedsList, searchInput, handleSearchInput, error} =
+		useBreedList();
 	return error ? (
 		<div>Error: ${error.message}</div>
 	) : (
@@ -26,7 +21,7 @@ function BreedList() {
 				onChange={handleSearchInput}
 			/>
 			{filteredBreedsList.map((breed, idx) => (
-				<BreedName key={idx} breed={breed} subBreed={allBreeds[breed]} />
+				<BreedName key={idx} breed={breed} />
 			))}
 		</div>
 	);

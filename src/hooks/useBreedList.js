@@ -1,31 +1,13 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-//api to get list of all breeds from dog.ceo
-const breedsListApi = "https://dog.ceo/api/breeds/list/all";
+import { useState, useEffect, useContext } from "react";
+import { PageContext } from "../Context";
 
 const useBreedList = () => {
-	const [breedList, setBreedList] = useState([]);
+	// const [breedList, setBreedList] = useState([]);
 	const [filteredBreedsList, setFilteredBreedsList] = useState([]);
-	const [allBreeds, setAllBreeds] = useState({});
-	const [error, setError] = useState(null);
 	const [searchInput, setSearchInput] = useState("");
-
-	async function getBreedsList() {
-		axios
-			.get(breedsListApi)
-			.then(({ data }) => {
-				// 	//set both, breedsList and filteredBreedsList to the all breeds fetched
-				// 	//-> subbreeds would be available on the data.message object like such ->{ breed: [subbreed]}
-				setAllBreeds(data.message);
-				setBreedList(Object.keys(data.message));
-				setFilteredBreedsList(Object.keys(data.message));
-			})
-			.catch((error) => setError(error));
-	}
-
-	useEffect(() => {
-		getBreedsList();
-	}, []);
+	const breedList = useContext(PageContext).allBreeds;
+	const error = useContext(PageContext).error;
+	
 
 	useEffect(() => {
 		let regex = new RegExp(searchInput, "g");
@@ -40,11 +22,10 @@ const useBreedList = () => {
 	};
 
 	return {
-		allBreeds,
 		filteredBreedsList,
 		searchInput,
 		handleSearchInput,
-		error,
+		error
 	};
 };
 
